@@ -9,6 +9,7 @@ services:
     ports:
       - 8080:8080
     volumes:
+      - ./server.go:/app/server.go
       - ./src:/app/src
     env_file:
       - .env.dev
