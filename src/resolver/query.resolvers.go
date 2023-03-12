@@ -18,7 +18,14 @@ func (r *queryResolver) GetUserByID(ctx context.Context, userID int) (*model.Use
 
 // GetItems is the resolver for the getItems field.
 func (r *queryResolver) GetItems(ctx context.Context) ([]*model.Item, error) {
-	panic(fmt.Errorf("not implemented: GetItems - getItems"))
+	itemList := []*model.Item{}
+	res := r.DB.Find(&itemList)
+
+	if res.Error != nil {
+		return nil, fmt.Errorf(res.Error.Error())
+	}
+
+	return itemList, nil
 }
 
 // Query returns graph.QueryResolver implementation.

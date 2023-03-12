@@ -6,7 +6,6 @@ type Item struct {
 	ID    string `json:"id"`
 	Text  string `json:"text"`
 	Price int    `json:"price"`
-	User  *User  `json:"user"`
 }
 
 type NewItem struct {
