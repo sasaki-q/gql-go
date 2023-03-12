@@ -1,0 +1,9 @@
+input NewUser {
+  name: String!
+}
+
+input NewItem {
+  name: String!
+  price: Int!
+  userId: String!
+}

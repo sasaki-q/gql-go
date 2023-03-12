@@ -1,0 +1,5 @@
+type Query {
+  getUserById(user_id: Int!): User!
+
+  getItems: [Item!]!
+}
