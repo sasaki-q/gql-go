@@ -28,6 +28,25 @@ func (r *queryResolver) GetItems(ctx context.Context) ([]*model.Item, error) {
 	return itemList, nil
 }
 
+// GetItemWithPagination is the resolver for the getItemWithPagination field.
+func (r *queryResolver) GetItemWithPagination(ctx context.Context, from int) (*model.ItemConnection, error) {
+	itemList := []*model.Item{}
+
+	res := r.DB.Limit(100).Offset(from).Find(&itemList)
+
+	if res.Error != nil {
+		return nil, fmt.Errorf(res.Error.Error())
+	}
+
+	return &model.ItemConnection{
+		Items: itemList,
+		PageInfo: &model.PageInfo{
+			StartCursor: from,
+			EndCursor:   itemList[len(itemList)-1].ID,
+		},
+	}, nil
+}
+
 // Query returns graph.QueryResolver implementation.
 func (r *Resolver) Query() graph.QueryResolver { return &queryResolver{r} }
 

@@ -6,8 +6,7 @@ import (
 
 	"git/example.com/src/model"
 
-	"github.com/google/uuid"
-
+	"golang.org/x/exp/slices"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 )
@@ -20,6 +19,14 @@ func InitDB() (*gorm.DB, error) {
 
 	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
 
+	var tables []string
+	db.Table("information_schema.tables").Pluck("table_name", &tables)
+
+	if !slices.Contains(tables, "items") {
+		db.AutoMigrate(model.Item{})
+		db.Create(itemList())
+	}
+
 	return db, err
 }
 
@@ -27,10 +34,7 @@ func itemList() []*model.Item {
 	itemList := []*model.Item{}
 
 	for i := 0; i < 10000; i++ {
-		v, _ := uuid.NewUUID()
-
 		itemList = append(itemList, &model.Item{
-			ID:    v.String(),
 			Text:  fmt.Sprintf("test-item-%d", i),
 			Price: 1000 * i,
 		})

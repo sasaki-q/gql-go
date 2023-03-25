@@ -3,9 +3,14 @@
 package model
 
 type Item struct {
-	ID    string `json:"id"`
+	ID    int    `gorm:"primaryKey;autoIncrement"`
 	Text  string `json:"text"`
 	Price int    `json:"price"`
+}
+
+type ItemConnection struct {
+	Items    []*Item   `json:"items"`
+	PageInfo *PageInfo `json:"pageInfo"`
 }
 
 type NewItem struct {
@@ -16,6 +21,11 @@ type NewItem struct {
 
 type NewUser struct {
 	Name string `json:"name"`
+}
+
+type PageInfo struct {
+	StartCursor int `json:"startCursor"`
+	EndCursor   int `json:"endCursor"`
 }
 
 type User struct {

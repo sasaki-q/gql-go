@@ -4,7 +4,17 @@ type User {
 }
 
 type Item {
-  id: ID!
+  id: Int!
   text: String!
   price: Int!
+}
+
+type ItemConnection {
+  items: [Item!]!
+  pageInfo: PageInfo!
+}
+
+type PageInfo {
+  startCursor: Int!
+  endCursor: Int!
 }

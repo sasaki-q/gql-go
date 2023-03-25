@@ -2,4 +2,5 @@ type Query {
   getUserById(user_id: Int!): User!
 
   getItems: [Item!]!
+  getItemWithPagination(from: Int!): ItemConnection
 }
